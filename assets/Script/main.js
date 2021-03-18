@@ -2,6 +2,44 @@ import Book, { storageMyLibrary, remove, reloadPage } from './function.js';
 
 const btn = document.getElementById('submit_btn');
 
+function validate(book) {
+  let validation = true;
+  if (book.author === '') {
+    const author = document.getElementById('authormsj');
+    author.innerHTML = "Author can't be blank";
+    author.style.color = 'Red';
+
+    validation = false;
+  } else {
+    const author = document.getElementById('authormsj');
+    author.innerHTML = '';
+  }
+
+  if (book.title === '') {
+    const title = document.getElementById('titlemsj');
+    title.innerHTML = "Title can't be blank";
+    title.style.color = 'Red';
+
+    validation = false;
+  } else {
+    const title = document.getElementById('titlemsj');
+    title.innerHTML = '';
+  }
+
+  if (book.pages <= 0) {
+    const title = document.getElementById('pagesmsj');
+    title.innerHTML = 'Create a book with more than 0 pages';
+    title.style.color = 'Red';
+
+    validation = false;
+  } else {
+    const title = document.getElementById('titlemsj');
+    title.innerHTML = '';
+  }
+
+
+  return validation;
+}
 
 function addBookToLibrary() {
   let myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
@@ -16,12 +54,12 @@ function addBookToLibrary() {
   const bookPages = form.elements[2].value;
   const bookRead = form.elements[3].value;
   const book = new Book(bookAuthor, bookTitle, bookPages, bookRead);
-  validate(book)
-  if (validate(book)!==false){
-  myLibrary.push(book);
+  validate(book);
+  if (validate(book) === true) {
+    myLibrary.push(book);
 
-  storageMyLibrary(myLibrary);
-  reloadPage();
+    storageMyLibrary(myLibrary);
+    reloadPage();
   }
 }
 btn.addEventListener('click', () => {
@@ -83,51 +121,3 @@ window.addEventListener('load', () => {
     }
   }
 });
-
-function validate(book){
-let validation = true
-  if (book.author === ""){
-    let author=document.getElementById("authormsj")
-    author.innerHTML = "Author can't be blank"
-    author.style.color="Red"
-
-    validation = false
-
-    // console.log("wiii");
-   
-  }else{
-     // alert("hashash");
-    let author=document.getElementById("authormsj")
-    author.innerHTML = ""
-  }
-
-  if (book.title === ""){
-    let title=document.getElementById("titlemsj")
-    title.innerHTML = "Title can't be blank"
-    title.style.color="Red"
-
-    validation = false
-    // console.log("wiii");
-    // alert("hashash");
-  }else{
-    let title=document.getElementById("titlemsj")
-    title.innerHTML = ""
-  }
-
-  if (book.pages <= 0){
-    let title=document.getElementById("pagesmsj")
-    title.innerHTML = "Create a book with more than 0 pages"
-    title.style.color="Red"
-
-    validation = false
-    // console.log("wiii");
-    // alert("hashash");
-  }else{
-    let title=document.getElementById("titlemsj")
-    title.innerHTML = ""
-  }
-
-  // book.pages = pages;
-  // book.read = read;
-  return validation
-}
