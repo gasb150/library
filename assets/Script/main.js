@@ -2,7 +2,8 @@ import Book,{functionalities} from './function.js';
 
 const btn = document.getElementById('submit_btn');
 
-function validate(book) {
+const bookDom = ((document) =>{
+const validate = (book) => {
   let validation = true;
   if (book.author === '') {
     const author = document.getElementById('authormsj');
@@ -41,7 +42,7 @@ function validate(book) {
   return validation;
 }
 
-function addBookToLibrary() {
+const addBookToLibrary = () => {
   let myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
 
   if (myLibrary === null) {
@@ -62,9 +63,9 @@ function addBookToLibrary() {
     functionalities.storageMyLibrary(myLibrary);
     functionalities.reloadPage();
   }
-}
+};
 
-function showBooks(){
+const showBooks = () => {
   const myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
   for (let i = 0; i < myLibrary.length; i += 1) {
     if (myLibrary[i].author !== '') {
@@ -83,8 +84,8 @@ function showBooks(){
         } else {
           myLibrary[id].read = 'Not read';
         }
-        storageMyLibrary(myLibrary);
-        reloadPage();
+        functionalities.storageMyLibrary(myLibrary);
+        functionalities.reloadPage();
       };
 
       removeButton.onclick = function toRemove() {
@@ -117,15 +118,20 @@ function showBooks(){
       removeButton.innerHTML = 'Remove';
     }
   }
-}
+};
 
-
+return {
+  showBooks,
+  addBookToLibrary,
+  validate,
+};
+})(document);
 
 window.addEventListener('load', () => {
-  showBooks();
+  bookDom.showBooks();
 });
 
 
 btn.addEventListener('click', () => {
-  addBookToLibrary();
+  bookDom.addBookToLibrary();
 });
