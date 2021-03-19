@@ -1,4 +1,4 @@
-import Book, { storageMyLibrary, remove, reloadPage } from './function';
+import Book,{functionalities} from './function.js';
 
 const btn = document.getElementById('submit_btn');
 
@@ -51,23 +51,20 @@ function addBookToLibrary() {
   const form = document.getElementById('input_book');
   const bookTitle = form.elements[0].value;
   const bookAuthor = form.elements[1].value;
-  const bookPages = form.elements[2].value;
+  const bookPages = parseInt(form.elements[2].value);
+  console.log(bookPages)
   const bookRead = form.elements[3].value;
   const book = new Book(bookAuthor, bookTitle, bookPages, bookRead);
   validate(book);
   if (validate(book) === true) {
     myLibrary.push(book);
 
-    storageMyLibrary(myLibrary);
-    reloadPage();
+    functionalities.storageMyLibrary(myLibrary);
+    functionalities.reloadPage();
   }
 }
-btn.addEventListener('click', () => {
-  addBookToLibrary();
-});
 
-
-window.addEventListener('load', () => {
+function showBooks(){
   const myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
   for (let i = 0; i < myLibrary.length; i += 1) {
     if (myLibrary[i].author !== '') {
@@ -91,8 +88,8 @@ window.addEventListener('load', () => {
       };
 
       removeButton.onclick = function toRemove() {
-        remove(this.id);
-        reloadPage();
+        functionalities.remove(this.id);
+        functionalities.reloadPage();
       };
 
       card.className = 'card';
@@ -120,4 +117,15 @@ window.addEventListener('load', () => {
       removeButton.innerHTML = 'Remove';
     }
   }
+}
+
+
+
+window.addEventListener('load', () => {
+  showBooks();
+});
+
+
+btn.addEventListener('click', () => {
+  addBookToLibrary();
 });
