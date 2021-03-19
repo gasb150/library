@@ -16,7 +16,7 @@ Eslint
 - Clone the repo by typing that command `git clone https://github.com/icebox827/library`  
 
 ## Live demo
-[clik here!](https://icebox827.github.io/library/.)
+[clik here!](https://gasb150.github.io/library/.)
 
 ## 🔨 Technologies
 
