@@ -10,11 +10,15 @@ export function remove(id) {
   storageMyLibrary(myLibrary);
 }
 
-export default function Book(title, author, pages, read) {
+export default class Book{
+  
+  constructor (title, author, pages, read) {
   this.author = author;
   this.title = title;
   this.pages = pages;
   this.read = read;
+}
+ 
 }
 
 export function reloadPage() {
